@@ -11,4 +11,28 @@ public class GumballMachine {
         return coin == 5 || coin == 10 || coin == 25;
     }
 
+    private void insertCoin(int coin){
+
+    }
+
+    private void returnRejectedCoins(){
+
+    }
+
+    public void dispensedRed(){
+
+    }
+
+    public void dispensedYellow(){
+
+    }
+
+    public void returnMyChange(){
+
+    }
+
+    public void showBalance(){
+
+    }
+
 }
