@@ -1,4 +1,8 @@
 public class GumballMachine {
 
-    // lets do it
+    private int balance;
+    private int rejected;
+
+    private final int RED_PRICE = 5;
+    private final int YELLOW_PRICE = 10;
 }
