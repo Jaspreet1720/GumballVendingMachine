@@ -53,6 +53,9 @@ public class GumballMachine {
 
     //Dispenses 1 red gumball if machine balance is sufficient
     public void dispensedRed(){
+
+        returnRejectedCoins();
+
         if(balance >= RED_PRICE){
             balance -= RED_PRICE;
             System.out.println("1 red gumball dispensed.");
@@ -66,6 +69,9 @@ public class GumballMachine {
 
     //Dispenses 1 yellow gumball if machine balance is sufficient
     public void dispensedYellow(){
+
+        returnRejectedCoins();
+
         if(balance >= YELLOW_PRICE){
             balance -= YELLOW_PRICE;
             System.out.println("1 yellow gumball dispensed.");
