@@ -13,7 +13,7 @@ public class GumballMachine {
     private final int YELLOW_PRICE = 10;
 
     public GumballMachine(){
-        rejected = new ArrayList<String>();
+        rejected = new ArrayList<>();
         balance = 0;
     }
 
@@ -48,7 +48,7 @@ public class GumballMachine {
         for(String item : rejected){
             System.out.println(item);
         }
-        rejected = new ArrayList<String>();
+        rejected = new ArrayList<>();
     }
 
     //Dispenses 1 red gumball if machine balance is sufficient
