@@ -2,97 +2,103 @@ import java.util.ArrayList;
 
 public class GumballMachine {
 
-    //Gumball machine's balance
+    // Gumball machine's balance
     private int balance;
 
-    //Invalid input to machine, which will be returned when dispenser lever is pressed
-    private ArrayList<String> rejected;
+    // Invalid input to machine, which will be returned when dispenser lever is
+    // pressed
+    private ArrayList<Integer> rejected;
 
-    //prices of gumballs
+    // prices of gumballs
     private final int RED_PRICE = 5;
     private final int YELLOW_PRICE = 10;
 
-    public GumballMachine(){
+    public GumballMachine() {
         rejected = new ArrayList<>();
         balance = 0;
     }
 
-    //Validates user input as valid currency to add to balance OR invalid input to be returned later
-    private boolean isValidCoin(String input) {
-        try{
-            int coin = Integer.parseInt(input);
-            if(coin == 5 || coin == 10 || coin == 25){
-                insertCoin(coin);
-                return true;
+    // Validates user input as valid currency to add to balance OR invalid input to
+    // be returned later
+    public void insertCoin(int coin) {
+        if (coin == 5 || coin == 10 || coin == 25) {
+            balance += coin;
+            // showBalance(); // Requirement doesn't explicitly say to show balance on
+            // insert, but TC-01 verifies Balance=5.
+            // Keeping it implicitly or checking output? The test cases check "Balance = 5".
+            // I'll keep showBalance() to match previous behavior and help with
+            // debugging/verification.
+            showBalance();
+        } else {
+            rejected.add(coin);
+            // "Invalid coin buffered for return" - no output needed here per TC-14 visual,
+            // but usually machines are silent or clunky. I'll leave it silent until
+            // dispense.
+        }
+    }
+
+    // Returns invalid user input
+    private void returnRejectedCoins() {
+        if (!rejected.isEmpty()) {
+            for (Integer item : rejected) {
+                System.out.println("Returned invalid coin: " + item);
             }
-            else{
-                rejected.add(input);
-                return false;
-            }
-        }
-        catch(NumberFormatException e){
-            rejected.add(input);
-            return false;
+            rejected.clear();
         }
     }
 
-    //Add valid currency to machine balance
-    private void insertCoin(int coin){
-        balance += coin;
-        showBalance();
-
-    }
-
-    //Returns invalid user input
-    private void returnRejectedCoins(){
-        for(String item : rejected){
-            System.out.println(item);
-        }
-        rejected = new ArrayList<>();
-    }
-
-    //Dispenses 1 red gumball if machine balance is sufficient
-    public void dispensedRed(){
-
+    // Dispenses 1 red gumball if machine balance is sufficient
+    public void dispensedRed() {
+        // "Invalid coins are returned when a dispense lever is pressed(whether vend
+        // succeeds or fails)."
         returnRejectedCoins();
 
-        if(balance >= RED_PRICE){
+        if (balance >= RED_PRICE) {
             balance -= RED_PRICE;
             System.out.println("1 red gumball dispensed.");
             showBalance();
-        }
-        else{
+        } else {
             System.out.println("Error. Insufficient funds. Gumball not able to be dispensed.");
             showBalance();
         }
     }
 
-    //Dispenses 1 yellow gumball if machine balance is sufficient
-    public void dispensedYellow(){
-
+    // Dispenses 1 yellow gumball if machine balance is sufficient
+    public void dispensedYellow() {
+        // "Invalid coins are returned when a dispense lever is pressed(whether vend
+        // succeeds or fails)."
         returnRejectedCoins();
 
-        if(balance >= YELLOW_PRICE){
+        if (balance >= YELLOW_PRICE) {
             balance -= YELLOW_PRICE;
             System.out.println("1 yellow gumball dispensed.");
             showBalance();
-        }
-        else{
+        } else {
             System.out.println("Error. Insufficient funds. Gumball not able to be dispensed.");
             showBalance();
         }
     }
 
-    //Returns remaining machine balance
-    public void returnMyChange(){
-        System.out.println(balance + " cents have been returned.");
-        balance = 0;
+    // Returns remaining machine balance
+    public void returnMyChange() {
+        // "Return My Change returns remaining valid balance... It does not return
+        // invalid coins."
+        if (balance > 0) {
+            System.out.println(balance + " cents have been returned.");
+            balance = 0;
+        } else {
+            System.out.println("0 cents have been returned.");
+        }
         showBalance();
     }
 
-    //Prints out current machine balance
-    public void showBalance(){
+    // Prints out current machine balance
+    public void showBalance() {
         System.out.println("Balance = " + balance);
     }
 
+    // For testing purposes, to inspect balance without parsing stdout
+    public int getBalance() {
+        return balance;
+    }
 }
